@@ -1,0 +1,123 @@
+\documentclass[a4paper]{article}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\newtheorem{thm}{Theorem}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[margin=1in]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usetikzlibrary{matrix}
+
+
+\title{The Binomial No-Arbitrage Pricing Model}
+
+\author{Peiliang Guo}
+
+\date{\today}
+\begin{document}
+\maketitle
+
+\section{One-Period Binomial Model}
+Stock price per share at $t_0$: $S_0$. At $t_1$, stock price will be one of $S_1(H)=uS_0$ and $S_1(T)=dS_0$, depending on the result of a toss of a coin. Result is measurable at $t_1$ and unknown at $t_0$. We do not need $p=\mathbf{P}(H)$ to equal $q=1-p=\mathbf{P}(T)$. 
+
+\begin{center}
+
+  \begin{tikzpicture}[>=stealth,sloped]
+    \matrix (tree) [%
+      matrix of nodes,
+      minimum size=1cm,
+      column sep=3.5cm,
+      row sep=1cm,
+    ]
+    {
+            & $S_1(H) = uS_0$    \\
+      $S_0$ &    \\
+          & $S_1(T)=dS_0$    \\
+    };
+    \draw[->] (tree-2-1) -- (tree-1-2) node [midway,above] {$p$};
+    \draw[->] (tree-2-1) -- (tree-3-2) node [midway,below] {$q=1-p$};
+      \end{tikzpicture}\end{center}
+Assume $u>r$. Also introduce interest rate $r$ such that $1$ dollar at $t_0$ becomes $1+r$ dollars at $t_1$, only $r>-1$ is required. With the assumption that the stock price is always positive, to avoid arbitrage, we requrie $$0<d<1+r<u$$  
+Consider a \textit{European Call option}, which gives its owner the right but not the obligation to buy one share of stock at the \textit{strike price} $K$. i.e. payoff$=(S_1-K)^+$. \\
+The \textit{arbitrage pricing theory} replicates the option by trading the stock and money markets. The no-arbitrage price of the option should be the time-zero price of the portfolio of stocks and money markets that replicates the time-one payoff of the option. It assumes the following:
+\begin{itemize}
+\item share of stock can be subdivided for sale or purchase
+\item the interest rate for investing is the same as the interest rate for borrowing
+\item the purchase price of stock is the same as the selling price
+\item at any time, the stock can take only two possible values in the next period
+\end{itemize}
+In general, suppose a derivative security pays $V_1(H)$ and $V_1(T)$ at $t_1$, and suppose we can replicate the portfolio with $\Delta_0$ shares of stock and $X_0-\Delta_0S_0$ in the money market. Then our $t_1$ portfolio value is 
+$$X_1 = \Delta S_1+(1+r)(X_0-\Delta S_0) = (1+r)X_0+\Delta_0(S_1-(1+r)S_0)$$
+We need $X_1(H) = V_1(H)$ and $X_1(T) = V_1(T)$, i.e.
+\begin{align*}&X_0 + \Delta_0\left(\frac{1}{1+r}S_1(H) - S_0\right)=\frac{1}{1+r}V_1(H)\\
+&X_0+\Delta_0\left(\frac{1}{1+r}S_1(T)-S_0\right) = \frac{1}{1+r}V_1(T)\end{align*}
+Introduce artificial quantity $\tilde{p}$ and $\tilde{q}=1-\tilde{p}$, such that $$S_0 = \frac{1}{1+r}\left[\tilde{p}S_1(H)+\tilde{q}S_1(T)\right]\Longrightarrow \tilde{p} = \frac{1+r-d}{u-d}, \tilde{q} = \frac{u-1-r}{u-d}$$
+Then multiply the first equation by $\tilde{p}$ plus the second equation multiplied by $\tilde{q}$, we get 
+$$X_0 =\frac{1}{1+r}[\tilde{p}V_1(H)+\tilde{q}V_1(T)]$$
+Therefore, by the no-arbitrage argument, the derivative that pays $V_1$ at $t_1$ should be priced at $$V_0=\frac{1}{1+r}[\tilde{p}V_1(H)+\tilde{q}V_1(T)]$$ at $t_0$. 
+$\tilde{p}$ and $\tilde{q}$ (together constitutes probability measure $\mathbf{Q}$) are artificial probabilities that makes \textbf{all traded assets} to have expected discount $r$. $\mathbf{Q}$ is called risk-neutral measure, since if $\mathbf{Q}$ is the probability, investors are risk neutral.
+\section{Multiperiod Binomial Model}
+Extend the single period model to multi-period.
+\begin{center}
+\begin{tikzpicture}[>=stealth,sloped]
+    \matrix (tree) [%
+      matrix of nodes,
+      minimum size=1cm,
+      column sep=3.5cm,
+      row sep=1cm,
+    ]
+    {
+    	& & $S_2(HH)=uuS_0$\\
+            & $S_1(H) = uS_0$&    \\
+      $S_0$ &   &$S_2(HT)=S_2(TH)=udS_0$ \\
+          & $S_1(T)=dS_0$   & \\
+          &&$S_2(TT)=ddS_0$\\
+    };
+    \draw[->] (tree-3-1) -- (tree-2-2) node [midway,above] {$p$};
+    \draw[->] (tree-3-1) -- (tree-4-2) node [midway,below] {$q=1-p$};
+        \draw[->] (tree-2-2) -- (tree-1-3) node [midway,above] {$p$};
+    \draw[->] (tree-2-2) -- (tree-3-3) node [midway,below] {$q=1-p$};
+        \draw[->] (tree-4-2) -- (tree-3-3) node [midway,above] {$p$};
+    \draw[->] (tree-4-2) -- (tree-5-3) node [midway,below] {$q=1-p$};
+      \end{tikzpicture}\end{center}
+Suppose an European call option that pays $V_2 = (S_2-K)^+$, where $V_2$ and $S_2$ depend on the first and second coin toss. Suppose an agent sells the option for $V_0$ dollars, then she buys $\Delta_0$ shares of stock and invests $V_0-\Delta_0 S_0$ in the money market to hedge her position. At $t_1$, the agent has a portfolio (not including one unit short in the option) valued at 
+\begin{align*}
+X_1(H) = \Delta_0 S_1(H) + (1+r)(V_0-\Delta_0S_0)\\
+X_1(T) = \Delta_0 S_1(T) + (1+r)(V_0-\Delta_0S_0)
+\end{align*}
+She readjust her positions to $\Delta_1$ shares of stock, and invests $X_1-\Delta_1S_1$ in the money market, then at $t_2$, she has
+\begin{align*}
+V_2(HH) &= \Delta_1(H)S_2(HH)+(1+r)(X_1(H)-\Delta_1(H)S_1(H))\\
+V_2(HT) &= \Delta_1(H)S_2(HT)+(1+r)(X_1(H)-\Delta_1(H)S_1(H))\\
+V_2(TH) &= \Delta_1(T)S_2(TH)+(1+r)(X_1(T)-\Delta_1(T)S_1(T))\\
+V_2(TT) &= \Delta_1(T)S_2(TT)+(1+r)(X_1(T)-\Delta_1(T)S_1(T))
+\end{align*}
+There are six equations, with six unknowns: $V_0,X_1(H),X_1(T),\Delta_0,\Delta_1(H),\Delta_1(T)$. The solution can be solved by breaking the problem into three 1-period models
+\begin{align*}
+\Delta_1(T) &= \frac{V_2(TH)-V_2(TT)}{S_2(TH)-S_2(TT)}\\
+V_1(T) &= X_1(T) = \frac{1}{1+r}[\tilde{p}V_2(TH)+\tilde{q}V_2(TT)]\\
+\Delta_1(H) &= \frac{V_2(HH)-V_2(HT)}{S_2(HH)-S_2(HT)}\\
+V_1(H) &= X_1(H) = \frac{1}{1+r}[\tilde{p}V_2(HH)+\tilde{q}V_2(HT)]\\
+\Delta_0 &= \frac{V_1(H)-V_1(T)}{(S_1(H)-S_1(T)}\\
+V_0 &= X_0 = \frac{1}{1+r}[\tilde{p}V_1(H) + \tilde{q}V_1(T)]
+\end{align*}
+$V_n$ is call the no-arbitrage price of the derivative security at time $n$. 
+\begin{thm}\textbf{(Replication in the multiperiod binomial model)}
+Consider an $N$-period binomial asset-pricing model, with $0<d<1+r<u$, and with
+$$\tilde{p} = \frac{1+r-d}{u-d}, \tilde{q} = \frac{u-1-r}{u-d}$$
+Let $V_N$ be a random variable (a derivative security paying off at time $N$) depending on the first $N$ coin tosses $\omega_1\omega_2...\omega_N$. Define recursively backward in time the sequence of random variables $V_{N-1},V_{N-2},...,V_0$ by 
+$$V_n(\omega_1\omega_2...\omega_n)=\frac{1}{1+r}[\tilde{p}V_{n+1}(\omega_1\omega_2...\omega_nH)+\tilde{q}V_{n+1}(\omega_1\omega_2...\omega_nT)],$$ so that each $V_n$ depends on the first $n$ coin tosses $\omega_1\omega_2...\omega_n$ where $n$ ranges between $N-1$ and $0$. Next define
+$$\Delta_n(\omega_1...\omega_n)=\frac{V_{n+1}(\omega_1...\omega_nH)-V_{n+1}(\omega_1...\omega_nT)}{S_{n+1}(\omega_1...\omega_nH)-S_{n+1}(\omega_1...\omega_nT)}$$
+where again $n$ ranges between $0$ and $N-1$. If we set $X_0=V_0$ and define recursively forward in time the portfolio values $X_1,...,X_N$ by 
+$$X_{n+1}=\Delta_nS_{n+1}+(1+r)(X_n-\Delta_n S_n)$$
+then we will have 
+$$X_N(\omega_1...\omega_N) = V_N(\omega_1...\omega_N) \,\text{ for all }\omega_1...\omega_N.$$
+\end{thm}
+Proof by forward induction.
+Theorem also applies to path-dependent options. refer to example 1.2.4 in Shreve.
+
+\end{document}
+              

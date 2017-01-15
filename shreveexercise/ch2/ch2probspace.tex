@@ -1,0 +1,205 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts,bbm}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usetikzlibrary{matrix}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{Lemma}[2][Lemma]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+%If you want to title your bold things something different just make another thing exactly like this but replace "problem" with the name of the thing you want, like theorem or lemma or whatever
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}{Lemma}
+\begin{document}
+
+	
+	\title{Probability Theory on Coin Toss Space}
+	\author{Peiliang Guo}
+	\maketitle
+	\begin{problem}{1}	\end{problem}
+	(i) We first prove disjoint additivity: if $E_1$ and $E_2$ are disjoint, then $\mathbb{P}(E_1)+\mathbb{P}(E_2) = \mathbb{P}(E_1\cup E_2)$.
+	$$\mathbb{P}(E_1)+\mathbb{P}(E_2) = \sum_{\omega\in E_1}\mathbb{P}(\omega)+ \sum_{\omega\in E_2}\mathbb{P}(\omega)=\sum_{\omega\in(E_1\cup E_2)}\mathbb{P}(\omega)=\mathbb{P}(E_1\cup E_2)$$
+Since $A$ and $A^C$ are disjoint, $$\mathbb{P}(A^C)+\mathbb{P}(A)=\mathbb{P}(\Omega) = 1 \Rightarrow \mathbb{P}(A^C) = 1-\mathbb{P}(A)$$
+	(ii) Note that disjoint additivity holds for more than two sets, so the equality case holds trivially. \\
+	Disjoint additivity also shows if $E_1\subset E_2$, then $\mathbb{P}(E_1)\le\mathbb{P}(E_2)$, since $$E_2 = E_1\cup(E_2\setminus E_1)\Rightarrow \mathbb{P}(E_2) = \mathbb{P}(E_1)+\mathbb{P}(E_2\setminus E_1)\Rightarrow \mathbb{P}(E_1)\le\mathbb{P}(E_2)$$
+	Now, let $E_0=A_0$, and let $E_k = A_k\setminus(\cup_{i=1}^{k-1}E_i)$ for $k=2,3,...,N$, then $E_i$ are disjoint and $\cup_{i=1}^NE_i = \cup_{i=1}^N A_i$. So, 
+	$$\mathbb{P}\left(\bigcup_{n=1}^N A_n\right)=\mathbb{P}\left(\bigcup_{n=1}^N E_n\right)=\sum_{n=1}^N\mathbb{P}(E_n)\le \sum_{n=1}^N\mathbb{P}(A_n)$$
+	
+	\begin{problem}{2}\end{problem}
+	(i) The probabilities follow binomial probabilities with $p=\tilde{p} = \frac{1}{2}$. i.e.
+	\begin{align*}
+	\tilde{\mathbb{P}}(S_3 = 32) =& {3\choose 3}\left(\frac{1}{2}\right)^3=\frac{1}{8}\\
+	\tilde{\mathbb{P}}(S_3 = 8) =& {3\choose 2}\left(\frac{1}{2}\right)^3=\frac{3}{8}\\
+	\tilde{\mathbb{P}}(S_3 = 2) =& {3\choose 1}\left(\frac{1}{2}\right)^3=\frac{3}{8}\\
+	\tilde{\mathbb{P}}(S_3 = 0.5) =& {3\choose 0}\left(\frac{1}{2}\right)^3=\frac{1}{8}\\
+	\end{align*}
+	(ii) \begin{align*}
+	\tilde{\mathbb{E}}S_1 =&{1\choose 1} \tilde{p}S_1(H)+\tilde{q}S_1(T) = \frac{1}{2}\cdot 8 +\frac{1}{2}\cdot 2 = 5\\
+	\tilde{\mathbb{E}}S_2 =& {2\choose 2}\tilde{p}^2S_2(HH)+{2\choose 1}\tilde{p}\tilde{q}S_2(HT) + {2\choose 0}\tilde{q}^2 S_2(TT) = \frac{1}{4}\cdot 16 + \frac{2}{4}\cdot 4 +\frac{1}{4}\cdot 1 = 6.25\\
+	\tilde{\mathbb{E}}S_3 =& {3\choose 3}\tilde{p}^3S_3(HHH)+{3\choose 2}\tilde{p}^2\tilde{q}S_3(HHT)+{3\choose 1}\tilde{p}\tilde{q}^2 S_3(HTT)+{3\choose 0}\tilde{q}^3S_3(TTT) = 7.8125
+	\end{align*}
+	The rate of growth of mean stock price under $\tilde{\mathbb{P}}$ is $1+r = 1.25$. \\
+	(iii) \begin{align*}
+	\mathbb{P}(S_3 = 32) =& {3\choose 3}\left(\frac{2}{3}\right)^3=\frac{8}{27}\\
+	\mathbb{P}(S_3 = 8) =& {3\choose 2}\left(\frac{2}{3}\right)^2\left(\frac{1}{3}\right)=\frac{12}{27}\\
+	\mathbb{P}(S_3 = 2) =& {3\choose 1}\left(\frac{2}{3}\right)^1\left(\frac{1}{3}\right)^2=\frac{6}{27}\\
+	\mathbb{P}(S_3 = 0.5) =& {3\choose 0}\left(\frac{1}{3}\right)^3=\frac{1}{27}\\
+	\end{align*}
+	\begin{align*}
+	\mathbb{E}S_1 =& \frac{2}{3}\cdot 8 +\frac{1}{3}\cdot 2 = 6\\
+	\mathbb{E}S_2 =& \frac{4}{9}\cdot 16 + \frac{4}{9}\cdot 4 +\frac{1}{9}\cdot 1 = 9\\
+	\mathbb{E}S_3 =& \frac{8}{27}\cdot 32 + \frac{12}{27}\cdot 8 + \frac{6}{27}\cdot 2 + \frac{1}{27}\cdot 0.5 = 13.5
+	\end{align*}
+	The rate of growth of mean stock price under $\mathbb{P}$ is $1.5$. \\
+	\begin{problem}{3}\end{problem}
+	By martingale property, for any $0\le n\le N-1$, 
+	$$M_n = \mathbb{E}_nM_{n+1} \Rightarrow \varphi(M_n) = \varphi(\mathbb{E}_nM_{n+1})$$
+	By conditional Jensen's inequality, since $\varphi$ is convex,
+	$$\varphi(M_n) = \varphi(\mathbb{E}_n M_{n+1})\le \mathbb{E}_n[\varphi(M_{n+1})]$$
+	Thus, $\varphi(M_0),...,\varphi(M_N)$ is a submartingale. 
+	\begin{problem}{4}\end{problem}
+	(i) For arbitrary $n\ge 0$, we have
+	\begin{align*}
+	\mathbb{E}_n[M_{n+1}] =& \mathbb{E}_n[M_n + X_{n+1}] & \\
+	=&\mathbb{E}_n[M_n\cdot 1] + \mathbb{E}_n[X_{n+1}] &\text{by linearity of C.E.}\\
+	=&M_n\mathbb{E}_n[1] + \mathbb{E}_n[X_{n+1}] &\text{by taking out what is known}\\
+	=&M_n + \mathbb{E}[X_{n+1}] &\text{by independence}\\
+	=&M_n + \frac{1}{2}\cdot 1+\frac{1}{2}\cdot (-1)  &\\
+	=&M_n & 
+	\end{align*}
+	(ii) For arbitrary $n\ge 0$, we have
+	\begin{align*}
+	\mathbb{E}_n[S_{n+1}] =& \mathbb{E}_n\left[e^{\sigma M_{n+1}}\left(\frac{2}{e^\sigma+e^{-\sigma}}\right)^{n+1}\right]\\
+	=&\mathbb{E}_n\left[e^{\sigma M_n}\left(\frac{2}{e^\sigma+e^{-\sigma}}\right)^{n+1}e^{\sigma X_{n+1}}\right]\\
+	=&\left(\frac{2}{e^\sigma+e^{-\sigma}}\right)\mathbb{E}\left[e^{\sigma X_{n+1}}\right] \mathbb{E}_n\left[e^{\sigma M_n}\left(\frac{2}{e^\sigma+e^{-\sigma}}\right)^n\right]\\
+	=&\left(\frac{2}{e^\sigma+e^{-\sigma}}\right)\left(\frac{1}{2}e^\sigma+\frac{1}{2}e^{-\sigma}\right)S_n\\
+	=&S_n
+	\end{align*}
+	\begin{problem}{5}\end{problem}
+	(i) \begin{align*}
+	2I_n=&2\sum_{j=0}^{n-1}M_j(M_{j+1}-M_j)=2\sum_{j=0}^{n-1} \sum_{i=1}^j X_iX_{j+1}
+	=2\left(\sum_{j=1}^{n} \sum_{i=1}^{j} X_iX_{j}-\sum_{j=1}^n X_j^2\right)\\
+	=&\left(\sum_{j=1}^nX_j\right)^2+\sum_{j=1}^nX_j^2 - 2\sum_{j=1}^nX_j^2 = M_n^2 - n
+	\end{align*}
+	the last equality holds because $X_j^2 = 1$ in both cases. \\
+	(ii) 
+	\begin{align*}
+	E_n[f(I_{n+1})] =& E_n\left[f\left(\frac{1}{2}M_{n+1}^2-\frac{n+1}{2}\right)\right]\\
+	=&E_n\left[f\left(\frac{1}{2}(M_n^2+2X_{n+1}M_n+X_{n+1}^2-n-1)\right)\right]\\
+	=&E_n\left[f(I_n+M_nX_{n+1})\right]
+	\end{align*}
+	Since $I_n$ and $M_n$ are known at time $n$, we have
+	\begin{align*}g(I_n) = &E_n[f(I_{n+1})] = E_n[f(I_n+M_nX_{n+1})]\\=&\frac{1}{2}f(I_n+M_n)+\frac{1}{2}f(I_n-M_n)\\=&\frac{1}{2}\left(f(I_n+\sqrt{2I_n+n})+f(I_n-\sqrt{2I_n+n})\right)\end{align*}
+	\begin{problem}{6}\end{problem}
+	For any $0\le n\le N-1$, 
+	\begin{align*}
+	E_n[I_{n+1}]=&E_n[I_n+\Delta_n(M_{n+1}-M_n)]\\
+		=&I_n+\Delta_n E_n[M_{n+1}-M_n]\\
+		=&I_n
+	\end{align*}
+	\begin{problem}{7}\end{problem}
+	Let $X_0=0$, $X_1=1$ with probability $\frac{1}{2}$, and $X_1=-1$ with probability $\frac{1}{2}$. For $n\ge2$, $X_n = X_{n-1}+\varepsilon_n$ with probability $\frac{1}{2}$, and $X_n=X_{n-1}-\varepsilon_n$ with probability $\frac{1}{2}$, where $\varepsilon_n = 1$ if $X_{n-2}>X_{n-1}$, and $\varepsilon=2$ if $X_{n-2}<X_{n-1}$. 
+	\begin{problem}{8}\end{problem}
+	(i) For $n=N-1$, for any $\omega_1...\omega_n$, 
+	\begin{align*}M_n'(\omega_1...\omega_n) =& \frac{1}{1+r}[\tilde{p}M_N'(\omega_1...\omega_nH)+\tilde{q}M_N'(\omega_1...\omega_nT)]\\
+	=&\frac{1}{1+r}[\tilde{p}M_N(\omega_1...\omega_nH)+\tilde{q}M_N(\omega_1...\omega_nT)]\\
+	=&M_N(\omega_1...\omega_n)\end{align*}
+	The argument can be applied recursively until $n$ reaches $0$. \\
+	(ii) for any $0\le n\le N-1$, and for every $\omega_1...\omega_n$, 
+	\begin{align*}
+	\tilde{\mathbb{E}}_n\left[\frac{V_{n+1}}{(1+r)^{n+1}}\right](\omega_1...\omega_n) &= \frac{1}{(1+r)^{n+1}}[\tilde{p}V_{n+1}(\omega_1...\omega_nH)+\tilde{q}V_{n+1}(\omega_1...\omega_nT)]\\
+	&=\frac{1}{(1+r)^n}\frac{1}{1+r}[\tilde{p}V_{n+1}(\omega_1...\omega_nH)+\tilde{q}V_{n+1}(\omega_1...\omega_nT)]\\
+	&=\frac{V_n}{(1+r)^n}
+	\end{align*}
+	(iii) for any $0\le n\le N-1$, and for every $\omega_1...\omega_n$, (here we suppress $\omega_1...\omega_n$)
+	\begin{align*}
+	\tilde{\mathbb{E}}_n\left[\frac{V'_{n+1}}{(1+r)^{n+1}}\right] &= \frac{1}{(1+r)^{n+1}}\tilde{\mathbb{E}}_n\left[\tilde{\mathbb{E}}_{n+1}\left[\frac{V'_N}{(1+r)^{N-n-1}}\right]\right]\\
+	&=\frac{1}{(1+r)^{N}}\tilde{\mathbb{E}}_n\left[V'_N\right]\\
+	&=\frac{V'_n}{(1+r)^n}
+	\end{align*}
+	(iv) Conclusion can be drawn from part (i), since the terminal payoff are the same $V_N = V'_N$, and $V_0,V_1,...,V_N$, and $V'_0,V'_1,...,V'_N$ are martingales. 
+	\begin{problem}{9}\end{problem}
+	(i) We have
+	\begin{align*}\tilde{p}_1(H) = \frac{1+r_1(H)-d_1(H)}{u_1(H)-d_1(H)} = \frac{1+\frac{1}{4}-1}{\frac{3}{2}-1} =\frac{1}{2},&\,\tilde{q}_1(H)=1-\tilde{p}_1(H) = \frac{1}{2}\\
+	\tilde{p}_1(T) = \frac{1+r_1(T)-d_1(T)}{u_1(T)-d_1(T)} = \frac{1+\frac{1}{2}-1}{4-1} =\frac{1}{6},&\,\tilde{q}_1(T)=1-\tilde{p}_1(T) = \frac{5}{6}\\
+	\tilde{p}_0 = \frac{1+r_0-d_0}{u_0-d_0} = \frac{1+\frac{1}{4}-\frac{1}{2}}{2-\frac{1}{2}} =\frac{1}{2},&\,\tilde{q}_1(T)=1-\tilde{p}_1(T) = \frac{1}{2}\\ \end{align*}
+	Therefore, 
+	\begin{align*}
+	\tilde{\mathbb{P}}(HH)=\tilde{p}_0\tilde{p}_1(H) = \frac{1}{2}\cdot\frac{1}{2} = \frac{1}{4} &, \tilde{\mathbb{P}}(HT)=\tilde{p}_0\tilde{q}_1(H) = \frac{1}{2}\cdot\frac{1}{2} = \frac{1}{4}\\
+	\tilde{\mathbb{P}}(TH)=\tilde{q}_0\tilde{p}_1(T) = \frac{1}{2}\cdot\frac{1}{6} = \frac{1}{12} &, \tilde{\mathbb{P}}(HT)=\tilde{q}_0\tilde{q}_1(T) = \frac{1}{2}\cdot\frac{5}{6} = \frac{5}{12}
+	\end{align*}
+	Note that 
+	\begin{align*}
+	\tilde{\mathbb{E}}\left[\frac{S_2}{(1+r_0)(1+r_1)}\right] = & \frac{1}{4}\cdot\frac{12}{(1+\frac{1}{4})(1+\frac{1}{4})} + \frac{1}{4}\cdot\frac{8}{(1+\frac{1}{4})(1+\frac{1}{4})} +\\ &\frac{1}{12}\cdot\frac{8}{(1+\frac{1}{4})(1+\frac{1}{2})} + \frac{5}{12}\cdot\frac{2}{(1+\frac{1}{4})(1+\frac{1}{2})}\\
+	=&4 = S_0
+	\end{align*}
+	(ii) $V_2 = (S_2-7)^+$, so $V_2(HH) = 12-7=5$, $V_2(HT) = 8-7 = 1$, $V_2(TH)=8-7 = 1$, $V_2(TT)=0$. Therefore,
+	\begin{align*}
+	&V_1(H) = \tilde{\mathbb{E}}_1\left[\frac{V_2}{1+r_1}\right](H) = \frac{1}{2}\cdot\frac{5}{1+\frac{1}{4}}+\frac{1}{2}\cdot\frac{1}{1+\frac{1}{4}}=\frac{12}{5}\\
+	&V_1(T) = \tilde{\mathbb{E}}_1\left[\frac{V_2}{1+r_1}\right](T) = \frac{1}{6}\cdot\frac{1}{1+\frac{1}{2}}+0=\frac{1}{9}\\
+	&V_0 =\tilde{\mathbb{E}}\left[\frac{V_2}{(1+r_0)(1+r_1)}\right]=\frac{1}{4}\cdot\frac{5}{(1+\frac{1}{4})(1+\frac{1}{4})}+\frac{1}{4}\cdot\frac{1}{(1+\frac{1}{4})(1+\frac{1}{4})}+\frac{1}{12}\cdot\frac{1}{(1+\frac{1}{4})(1+\frac{1}{2})}=\frac{226}{225}
+	\end{align*}
+	(iii) $$\Delta_0 = \frac{V_1(H)-V_1(T)}{S_1(H)-S_1(T)} = \frac{\frac{12}{5}-\frac{1}{9}}{8-2} = \frac{103}{270}$$
+	(iv) $$\Delta_1(H) = \frac{V_2(HH)-V_2(HT)}{S_2(HH)-S_2(HT)} = \frac{5-1}{12-8} = 1$$
+	\begin{problem}{10}\end{problem}
+	(i) for any $0\le n\le N-1$, we have
+	\begin{align*}
+	\tilde{\mathbb{E}}_n\left[\frac{X_{n+1}}{(1+r)^{n+1}}\right] &= \tilde{\mathbb{E}}_n\left[\frac{\Delta_nY_{n+1}S_n + (1+r)(X_n-\Delta_n S_n)}{(1+r)^{n+1}}\right]\\
+	&=\frac{1}{(1+r)^n}\left[\Delta_n S_n \frac{\tilde{\mathbb{E}}_n[Y_{n+1}]}{1+r}+X_n-\Delta_nS_n \right]\\
+	&=\frac{X_n}{(1+r)^n}+\frac{1}{(1+r)^{n+1}}\Delta_nS_n\left[\tilde{\mathbb{E}}_n[Y_{n+1}]-1-r\right]\\
+	&=\frac{X_n}{(1+r)^n}+\frac{1}{(1+r)^{n+1}}\Delta_nS_n\left[\frac{1+r-d}{u-d}\cdot u +\frac{u-1-r}{u-d}\cdot d -1-r\right]\\
+	&=\frac{X_n}{(1+r)^n}
+	\end{align*}
+	(ii) By definition, we have $V_{n}=\frac{1}{1+r}\tilde{\mathbb{E}}_n[V_{n+1}]$, i.e. $V_0,V_1,...,V_N$ is a $\tilde{\mathbb{P}}$ martingale. Also, since $X_N = V_N$ for all $\omega_1...\omega_N$, we have $X_n = V_n$ for all $n$ in all $\omega_1...\omega_n$. Therefore, $V_n$ is indeed the price of the derivative that pays $V_N$ at time $N$. \\
+	(iii) Since $A_n\in(0,1)$,\begin{align*}
+	\tilde{\mathbb{E}}_n\left[\frac{S_{n+1}}{1+r}\right] = \tilde{\mathbb{E}}_n\left[\frac{(1-A_{n+1})Y_{n+1}S_n}{1+r}\right] < S_n\tilde{\mathbb{E}}_n\left[\frac{Y_{n+1}}{1+r}\right] = \frac{S_n}{1+r}\left(\frac{1+r-d}{u-d}\cdot u+\frac{u-1-r}{u-d}d\right)=S_n
+	\end{align*}
+	Now, suppose $A_n$ is constant $a\in(0,1)$, 
+	\begin{align*}
+	\tilde{\mathbb{E}}_n\left[\frac{S_{n+1}}{(1-a)^{n+1}(1+r)^{n+1}}\right]&=\frac{S_n}{(1-a)^n(1+r)^n}\tilde{\mathbb{E}}_n\left[\frac{(1-a)Y_{n+1}}{(1-a)(1+r)}\right]\\
+	&=\frac{S_n}{(1-a)^n(1+r)^n} \left(\frac{1+r-d}{u-d}\cdot u \frac{u-1-d}{u-d}\cdot d\right) \\ &=\frac{S_n}{(1-a)^n(1+r)^n}
+	\end{align*}
+	\begin{problem}{11}	\end{problem}
+	(i) $$ F_N+P_N = S_N-K + (K-S_N)^+ = \begin{cases} S_N-K &,S_N\ge K\\0&, S_N<K\end{cases} = (S_N-K)^+=C_N$$
+	(ii) $$F_n+P_n = \tilde{\mathbb{E}}_n\left[\frac{F_N}{(1+r)^{N-n}}\right]+\tilde{\mathbb{E}}_n\left[\frac{P_N}{(1+r)^{N-n}}\right]=\tilde{\mathbb{E}}_n\left[\frac{F_N+P_N}{(1+r)^{N-n}}\right]=\tilde{\mathbb{E}}_n\left[\frac{C_N}{(1+r)^{N-n}}\right]=C_n$$
+	(iii)
+	$$F_0 = \tilde{\mathbb{E}}_0\left[\frac{F_N}{(1+r)^{N}}\right]\tilde{\mathbb{E}}_0\left[\frac{S_N-K}{(1+r)^{N}}\right]=\tilde{\mathbb{E}}_0\left[\frac{S_N}{(1+r)^{N}}\right]-\frac{K}{(1+r)^{N}}=S_0-\frac{K}{(1+r)^{N}}$$
+	(iv) At time 0: have 1 share of stock and $F_0-S_0=-\frac{K}{(1+r)^N}$ in bank account\\
+	At time $N$: $S_N+(1+r)^N\left(-\frac{K}{(1+r)^N}\right)=S_N-K=F_N$\\
+	(v) $$C_0 =F_0+P_0 = \tilde{\mathbb{E}}_0\left[\frac{S_N-S_0(1+r)^N}{(1+r)^{N}}\right]+P_0=P_0$$
+	(vi) Put all subscripts (conditional expectations) to $n$ instead of $0$
+	\begin{problem}{12}\end{problem}
+	At time $m$, the value $V_m$ of the chooser's option is 
+	$$V_m = \max(C_m,P_m) = P_m+(C_m-P_m)^+ =P_m+F_m^+ = P_m+\left(S_m-\frac{K}{(1+r)^{N-m}}\right)^+$$
+	Therefore, at time 0, the price of the chooser's option is 
+	$$V_0 = P_0+C'_0$$ where $C'$ is a call option with strike $\frac{K}{(1+r)^{N-m}}$ and maturity $m$. 
+	\begin{problem}{13}\end{problem}
+	(i) For every function $g$, we can write
+	$$\tilde{\mathbb{E}}_n[g(S_{n+1},Y_{n+1})]=\tilde{p}g(uS_n,Y_n+uS_n)+\tilde{q}g(dS_n,Y_n+dS_n)=h(S_n,Y_n)$$
+	Therefore, $(S_n,Y_n), n=0,1,...,N$ is Markov.\\
+	(ii) $$V_N = f\left(\frac{1}{N+1}\sum_0^N S_n \right) \Rightarrow v_N(s,y) = f\left(\frac{1}{N+1}y\right)$$
+	Now, for $n=0,1,...,N-1$, 
+	$$v_n(s,y) = \tilde{p}v_{n+1}(us,y+us)+\tilde{q}v_{n+1}(ds,y+ds)$$
+	\begin{problem}{14}\end{problem}
+	(i) For every function $g$, and for $n=M,M+1,...,N$, 
+	$$\tilde{\mathbb{E}}_n[g(S_{n+1},Y_{n+1})] = \tilde{p}g(uS_n,Y_n+uS_n)+\tilde{q}g(dS_n,Y_n+dS_n)$$
+	and for $n=0,1,...,M-2$, 
+	$$\tilde{\mathbb{E}}_n[g(S_{n+1},Y_{n+1})] = \tilde{p}g(uS_n,0) + \tilde{q}g(dS_n,0)$$
+	(ii) For $n=M+1,...,N-1$, 
+	$$v_n(s,y) = \frac{1}{1+r}[\tilde{p}v_{n+1}(us,y+us)+\tilde{q}v_{n+1}(ds,y+ds)]$$
+	For $n=M$,
+	$$v_n(s) = \frac{1}{1+r}[\tilde{p}v_{n+1}(us,us)+\tilde{q}v_{n+1}(ds,ds)]$$
+	For $n=0,1,...,M-1$,
+	$$v_n(s) = \frac{1}{1+r}[\tilde{p}v_{n+1}(us)+\tilde{q}v_{n+1}(ds)]$$
+ \end{document}
+
+	

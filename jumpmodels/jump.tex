@@ -1,0 +1,101 @@
+\documentclass[a4paper]{article}
+\usepackage{amsmath,amsthm,amssymb,amsfonts,bbm}
+\newtheorem{thm}{Theorem}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[margin=1in]{geometry}
+
+\title{Jump Modelling}
+
+\author{Peiliang Guo}
+
+\date{\today}
+\begin{document}
+\maketitle
+
+\section{Poisson Processes}
+\subsection{Definition}
+A process, $N_t$, is called a Poisson process with intensity $\lambda$ if (under probability space $(\Omega,\mathcal{F},\mathbb{P})$)
+\begin{itemize}
+	\item $N_0 = 0$ almost surely.
+	\item \textbf{Stationary Increment.} $N_{t+s} - N_s \sim H(t)$ for some distribution $H$.
+	\item \textbf{Independent Increment.} $N_s-N_t \perp N_u-N_v$ if $(t,s)\cap(v,u)=\emptyset$.
+	\item $N_t \sim Pois(\lambda t)$ 
+		i.e. $\mathbb{P}(N_t = n) = e^{-\lambda t}\frac{(\lambda t)^n}{n!}$
+	\item \textbf{Stochastic Continuity.} $\lim_{s\downarrow t} \mathbb{P}(N_s-N_t\ge \epsilon) = 0, \forall t,\epsilon>0$. \\
+		This can be interpreted as jumps do not happen at pre-determined time.
+	\item \textbf{R.C.L.L.} Right Continuous with Left Limit\\
+	i.e.  $\lim_{t\downarrow s} N_t = N_s$
+\end{itemize}
+\subsection{Moment Generating Function}
+Denote the m.g.f. by $$g_t(a) = \mathbb{E}[e^{aN_t}],$$ note that $g_t(a)$ has to satisfy the property $g_t(a) = g_{t-s}(a) g_s(a)$ by stationary independent increment. Therefore, $g_t(a)$ has to follow the form $e^{\psi(a,\lambda)t}$.\\
+Note that for random variable $X$ that follows Poisson distribution with mean $\lambda t$, the m.g.f. can be calculated from 
+\begin{align*}
+\mathbb{E}[e^{aX}] = \sum_{k=0}^\infty e^{ka}\frac{(\lambda t)^ke^{-\lambda t}}{k!}=e^{-\lambda t}\sum_{k=0}^\infty \frac{(e^a\lambda t)^k}{k!} = e^{-\lambda t}e^{e^a\lambda t} = \exp\{(e^a-1)\lambda t\}
+\end{align*}
+Since $X \overset{d}{=} N_t$, $g_t(a) = e^{(e^a-1)\lambda t}$.\\
+Exercise: Show that $M_t = e^{aN_t-(e^a-1)\lambda t}$ is a martingale.
+\begin{align*}
+\mathbb{E}_t[M_{t+s}] = e^{aN_t-(e^a-1)\lambda t}\mathbb{E}[e^{aN_{s}-(e^a-1)\lambda s}]=M_t\mathbb{E}[e^{aN_t}]e^{-a(e^a-1)s}=M_t
+\end{align*}
+\subsection{Measure Change}
+$N_t$ is a $\mathbb{P}$ Poisson process with intensity $\lambda$. To make measure change from $\mathbb{P}$ to $\mathbb{P}^*$, introduce quantity 
+$$\frac{d\mathbb{P}^*}{d\mathbb{P}} = e^{bN_T-(e^b-1)\lambda T}$$
+We first show that $\frac{d\mathbb{P}^*}{d\mathbb{P}}$ is a valid Radon-Nikodym derivative, and then we will show how the value of $b$ is related to $\mathbb{P}^*$. \\
+To show that $\frac{d\mathbb{P}^*}{d\mathbb{P}}$ is a R.N.D., we note that \\
+i) $\frac{d\mathbb{P}^*}{d\mathbb{P}}\ge 0$ a.s. In fact, $ \frac{d\mathbb{P}^*}{d\mathbb{P}} > 0$ a.s. i.e., $\mathbb{P}^*$ is equivalent to $\mathbb{P}$. \\
+ii) $\mathbb{E}_t\left[\frac{d\mathbb{P}^*}{d\mathbb{P}}\right]=e^{bN_t-(e^b-1)\lambda t}$ is a $\mathbb{P}$ Doob-martingale with $\mathbb{E}_0\left[\frac{d\mathbb{P}^*}{d\mathbb{P}}\right] = 1$, so $\frac{d\mathbb{P}^*}{d\mathbb{P}}$ is a valid Radon-Nikodym derivative.\\
+To compute the distribution of $N_t$ under $\mathbb{P}^*$, we compute the m.g.f. under $\mathbb{P}^*$
+\begin{align*}
+\mathbb{E}^{\mathbb{P}^*}\left[e^{aN_t}\right]&=\mathbb{E}^\mathbb{P}\left[e^{aN_t}\frac{d\mathbb{P}^*}{d\mathbb{P}}\right]=\mathbb{E}^\mathbb{P}\left[\mathbb{E}^\mathbb{P}_t\left[e^{aN_t}\frac{d\mathbb{P}^*}{d\mathbb{P}}\right]\right]=\mathbb{E}^\mathbb{P}\left[e^{aN_t}e^{bN_t-(e^b-1)\lambda t}\right]\\
+	&=\mathbb{E}^\mathbb{P}\left[e^{(a+b)N_t-(e^{a+b}-1)\lambda t}\right]e^{(e^{a+b}-1)\lambda t}e^{-(e^b-1)\lambda t}\\
+	&=e^{(e^a-1)e^b\lambda t}
+\end{align*}
+Note that this follows exactly the form of the M.G.F. with intensity $e^b\lambda$, so $N_t$ is a $\mathbb{P}^*$ Poisson process with intensity $\lambda^*=e^b\lambda$. 
+
+\subsection{Ito's Lemma with Jump Processes}
+For $\mathbb{P}$ Poisson process $N_t$ with intensity $\lambda$, let $$X_t \equiv g(N_t)-g(N_0)  ,$$
+then for any partition $\Pi$ of $[0,t]$,  $\Pi=\{t_0,t_1,...,t_m\}$, where $t_0 = 0$ and $t_m=t$, we can use telescoping sum to get
+$$X_t = \sum_k g(N_{t_k})-g(N_{t_k-1})$$
+If we take the limit as $\lVert \Pi\rVert\downarrow 0$, 
+$$X_t = \lim_{\lVert\Pi\rVert\downarrow 0}\sum_k g(N_{t_k})-g(N_{t_k-1})=\int_0^t \underbrace{(g(N_{u^-}+1)-g(N_{u^-}))}_\text{L.C.R.L} \underbrace{dN_u}_{\text{R.C.L.L}} $$
+Therefore, $$dX_t = (g(N_{t^-}+1)-g(N_{t^-}))dN_t$$
+Now, suppose $X_t=g(t,N_t)$, we can argue similarly that $$dX_t = \partial_tg(t,N_{t^-})dt+(g(t,N_{t^-}+1)-g(t,N_{t^-}))dN_t$$
+\subsubsection*{Ito's Lemma}
+Suppose \begin{align*}dY_t&=\mu(t,Y_{t^-})dt+\sigma(t,Y_{t^-})dN_t\\ X_t &= g(t,Y_t)\end{align*}
+then, $$dX_t = \partial_t g(t,Y_{t^-})dt+\mu(t,Y_{t^-})\partial_y g(t,Y_{t^-})dt+\left[g(t,Y_{t^-}+\sigma(t,Y_{t^-}))-g(t,Y_{t^-})\right]dN_t$$
+Now, suppose the price of underlying asset can be modelled through Geometric Poisson process
+$$dS_t = S_{t^-}(\mu dt+\sigma dN_t)$$
+To solve the SDE, we make usuall transformation of $X_t = \log(S_t)$, by Ito's lemma above, we have
+\begin{align*}dX_t &= \mu S_{t^-}\cdot\frac{1}{S_t}dt + (\log(S_{t^-}+S_{t^-}\sigma)-\log(S_{t^-}))dN_t \\
+	&=\mu dt+\log(1+\sigma)dN_t
+\end{align*}
+Then, $X_t-X_0 = \mu t +\log(1+\sigma)N_t$, so $$S_t = S_0 e^{\mu t}(1+\sigma)^{N_t}.$$
+Note that the expected return of $S_t$ under $\mathbb{P}$ is 
+$$\mathbb{E}^\mathbb{P}\left[\frac{S_t}{S_0}\right] = e^{\mu t}\mathbb{E}\left[(1+\sigma)^{N_t}\right]=e^{\mu t}e^{(e^{\log(1+\sigma)}-1)\lambda t}=e^{(\mu+\sigma\lambda)t}$$
+i.e., the jump term has contribution $\sigma\lambda$ for the expected return of $S_t$. 
+\subsection{Dynamic Hedging Argument with Jump Process}
+Suppose we have the underlying asset $S_t$ and money market $M_t$ modeled through the following SDEs
+\begin{align*}dS_t &= S_{t^-}(\mu dt+\sigma dN_t)\\ dM_t &= rM_t dt\end{align*}
+Then suppose we have a derivative valued $(g_t)_{t\ge 0}$ written on $S_t$ with maturity $T$ with final payoff structure $g_T= G(S_T)$. Note that the value of the derivative security $g_t$ is Markov in $t$ and $S_t$, so we write $g_t = g(t,S_t)$. We are interested in finding the price $g_t$, in terms of the function $g$.\\
+Suppose we have a portfolio consisting of $(\alpha_t,\beta_t,-1)$ in $S_t$, $M_t$, and $g_t$
+$$V_t=\alpha_tS_t+\beta_tM_t - g_t$$
+with $V_0=0$. By self-financing constraint, 
+$$dV_t = \alpha_{t^-} dS_t+\beta_{t^-} dM_t-dg_t$$
+By Ito's lemma and by definition,
+\begin{align*} dV_t &= \alpha_{t^-}S_{t^-}(\mu dt+\sigma dN_t)+\beta_{t^-}rM_tdt-\left\{[\partial_t g(t,S_t)+\mu S_t\partial_sg(t,S_{t^-})]dt+[g(t,S_{t^-}+\sigma S_{t^-})-g(t,S_{t^-})]dN_t\right\}\\
+&=[\alpha_{t^-}S_{t^-}\mu+\beta_{t^-}rM_t-\partial_t g-\mu S_{t^-}\partial_s g]dt +[\alpha_{t^-}S_{t^-}\sigma-g(t,S_{t^-}+\sigma S_{t^-})+g(t,S_{t^-})]dN_t
+\end{align*}
+To remove local risk, set the risk $dN_t$ term to $0$, 
+$$\alpha_{t^-}S_{t^-}\sigma - g(t,S_{t^-}+\sigma S_{t^-})+g(t,S_{t^-}) = 0\Longrightarrow \alpha_{t^-}=\frac{g(t,(1+\sigma))S_{t^-})-g(t,S_{t^-})}{\sigma S_{t^-}}$$
+Since $V_0 = 0$, a drift with non-zero value at any time will result in arbitrage. So we need to set the drift term equal to $0$ as well. i.e.,
+$$\alpha_{t^-}S_{t^-}\mu +\beta_{t^-}r M_t-\partial_t g-\mu S_{t^-}\partial_s g=0$$
+Since both drift and risk are adjusted to $0$, we have $V_t=0$ for all $t$, thus it is required that $$\beta_t M_t = g_t-\alpha_t S_t$$
+Substituting into previous result to get the final PIDE representation of the derivative price function 
+\begin{align*}&\alpha_{t^-}S_{t^-}(\mu-r)+rg_t-\partial_t g-\mu S_{t^-}\partial_s g=0\\
+\Rightarrow &\partial_t g(t,s)+\mu s\partial_s g(t,s)+\frac{r-\mu}{\sigma}[g(t,(1+\sigma)s)-g(t,s)]=rg(t,s)
+\end{align*}
+\end{document}
+              

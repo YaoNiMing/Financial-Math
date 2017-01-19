@@ -1,0 +1,107 @@
+\documentclass[a4paper]{article}
+\usepackage{amsmath,amsfonts}
+\usepackage{amsthm}
+\newtheorem{thm}{Theorem}
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition} 
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[margin=1in]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usetikzlibrary{matrix}
+
+
+\title{State Prices}
+
+\author{Peiliang Guo}
+
+\date{\today}
+\begin{document}
+\maketitle
+\section{Change of Measure}
+\textit{actual probability measure} - the model which we seek by empirical estimation of the model parameters. \\
+\textit{risk-neutral probability measure} - under which the discounted prices of assets are martingales. \\
+The two measures agree on the state space (equivalent measures), but disagree on the probability of each state occurring. \\
+Consider a finite sample space $\Omega$ on which we have two probability measures $\mathbb{P}$ and $\tilde{\mathbb{P}}$, both giving positive probability for every $\omega\in\Omega$. Form quotient 
+$$Z(\omega) = \frac{\tilde{\mathbb{P}}(\omega)}{\mathbb{P}(\omega)}$$
+$Z$ is a random variable because it depends on the outcome $\omega$ of a random experiment. $Z$ is called the \textit{Radon-Nikodym derivative of $\tilde{\mathbb{P}}$ w.r.t. $\mathbb{P}$}.
+\begin{thm}
+Let $\mathbb{P}$ and $\tilde{\mathbb{P}}$ be probability measures on finite sample space $\Omega$, assume that $\mathbb{P}(\omega)>0$ and $\tilde{\mathbb{P}}(\omega)>0$ for every $\omega\in\Omega$, and define random variable $Z$ as $Z(\omega) = \frac{\tilde{\mathbb{P}}(\omega)}{\mathbb{P}(\omega)}$. Then we have the following:\\
+(i) $\mathbb{P}(Z>0) = 1$;\\
+(ii) $\mathbb{E}Z = 1$;\\
+(iii) for any random variable $Y$, 
+$$\tilde{\mathbb{E}}Y = \mathbb{E}[ZY].$$
+\end{thm} 
+\begin{proof}
+Property (i) follows immediately from the fact that we have assumed $\mathbb{P}(\omega)>0$ and $\tilde{\mathbb{P}}(\omega)>0$ for every $\omega \in \Omega$. \\
+Property (ii) 
+$$\mathbb{E}Z = \sum_{\omega\in\Omega}Z(\omega)\mathbb{P}(\omega) = \sum_{\omega\in\Omega} \frac{\tilde{\mathbb{P}}(\omega)}{\mathbb{P}(\omega)}\mathbb{P}(\omega)  = \sum_{\omega\in\Omega}\tilde{\mathbb{P}}(\omega) = 1$$
+Property (iii)
+$$\tilde{\mathbb{E}}Y = \sum_{\omega\in\Omega}Y(\omega)\tilde{\mathbb{P}}(\omega) = \sum_{\omega\in\Omega}Y(\omega)\frac{\tilde{\mathbb{P}}(\omega)}{\mathbb{P}(\omega)}\mathbb{P}(\omega) = \sum_{\omega\in\Omega}Z(\omega)Y(\omega)\mathbb{P}(\omega) = \mathbb{E}[ZY]$$
+\end{proof}
+\begin{defn}
+In the $N$-period binomial model with actual probability measure $\mathbb{P}$ and risk-neutral probability measure $\tilde{\mathbb{P}}$, let $Z$ denote the Radon-Nikodym derivative of $\tilde{\mathbb{P}}$ w.r.t. $\mathbb{P}$; i.e. 
+$$Z(\omega_1...\omega_N) = \frac{\tilde{\mathbb{P}}(\omega_1...\omega_N)}{\mathbb{P}(\omega_1...\omega_N)}=\left(\frac{\tilde{p}}{p}\right)^{\#H(\omega_1...\omega_N)}\left(\frac{\tilde{q}}{q}\right)^{\#T(\omega_1...\omega_N)}$$
+The \textit{state price density} random variable is 
+$$\zeta(\omega) = \frac{Z(\omega)}{(1+r)^N}$$
+and $\zeta(\omega)\mathbb{P}(\omega)$ is called the \textit{state price} corresponding to $\omega$. 
+\end{defn}
+Note that the state price $\zeta(\bar{\omega})\mathbb{P}(\bar{\omega})$ is the price at time zero of a contract that pays $1$ at time $N$ if and only if $\bar{\omega}$ occurs. \\
+For contracts that with payoffs not necessarily $1$, and with payoffs associated with more than one $\omega$, we can consider the contract as a portfolio of the "simple contracts", each of which pays off $1$ if and only if some particular $\omega$ occurs. To see this, note that 
+$$V_0 = \tilde{\mathbb{E}}\frac{V_N}{(1+r)^N} = \mathbb{E}[\zeta V_N] = \sum_{\omega\in\Omega}V_N(\omega)\zeta(\omega)\mathbb{P}(\omega)$$
+\section{Radon-Nikodym Derivative Process}
+To estimate $Z$ based on information at time $n<N$, where $Z$ is not required to be a Radon-Kikodym derivative, we develop the following theorem
+\begin{thm}
+	Let $Z$ be a random variable in an $N$-period binomial model. Define
+	$$Z_n = \mathbb{E}_n Z, n=0,1,...,N.$$
+	Then $Z_n, n=0,1,...,N$ is a martingale under $\mathbb{P}$.
+\end{thm}
+\begin{proof}
+	For $n=0,1,...,N-1$, we use the iterated conditioning property. 
+	$$\mathbb{E}_n[Z_{n+1}]=\mathbb{E}_n[\mathbb{E}_{n+1}[Z]]=\mathbb{E}_n[Z]=Z_n$$
+\end{proof}
+Note that the martingale property holds not only under $\mathbb{P}$ but the risk-neutral measure $\tilde{\mathbb{P}}$ as well.
+\begin{defn}
+	In an $N$-period binomial model, let $\mathbb{P}$ be the actual probability measure, $\tilde{\mathbb{P}}$ the risk-neutral probability measure, and assume that $\mathbb{P}(\omega)>0$ and $\tilde{\mathbb{P}}(\omega)>0$ for every sequence of coin tosses $\omega$. Define the Randon-Nikodym derivative (random variable) $Z(\omega) = \frac{\tilde{\mathbb{P}}(\omega)>0}{\mathbb{P}(\omega)>0}$ for every $\omega$. The Radon-Nikodym derivative process is 
+	$$Z_n = \mathbb{E}_n[Z], n=0,1,...,N$$
+	In particular, $Z_N=Z$ and $Z_0=1$. 
+\end{defn}
+\begin{thm}
+	Assume the conditions of above definition. Let $n$ be a positive integer between $0$ and $N$, and let $Y$ be a random variable depending only on the first $n$ coin tosses. Then 
+	$$\tilde{\mathbb{E}}Y = \mathbb{E}[Z_n Y]$$
+\end{thm}
+\begin{proof}
+	$$\tilde{\mathbb{E}}Y = \mathbb{E}[ZY]=\mathbb{E}[\mathbb{E}_n[ZY]]=\mathbb{E}[Y\mathbb{E}_n[Z]]=\mathbb{E}[YZ_n]$$
+\end{proof}
+\begin{thm}
+	Consider an $N$-period binomial model with $0<d<1+r<u$. Let $\mathbb{P}$ and $\tilde{\mathbb{P}}$ denote the corresponding actual and risk-neutral probability measures, respectively. Let $Z$ be the Radon-Nikodym derivative of $\tilde{\mathbb{P}}$ w.r.t. $\mathbb{P}$, and let $Z_n,n=0,1,...,N$, be the Radon-Nikodym derivative process. 
+	Consider a derivative security whose payoff $V_N$ may depend on all $N$ coin tosses. For $n=0,1,..,N$, the price at time $n$ of the derivative security is 
+	$$V_n = \tilde{\mathbb{E}}_n\frac{V_N}{(1+r)^{N-n}}=\frac{(1+r)^n}{Z_n}\mathbb{E}_n\frac{Z_NV_N}{(1+r)^N}=\frac{1}{\zeta_n}\mathbb{E}_n[\zeta_NV_N],$$
+	where the state price density process $\zeta_n$ is defined by 
+	$$\zeta_n=\frac{Z_n}{(1+r)^n}, n=0,1,...,N.$$
+\end{thm}
+\section{Capital Asset Pricing Model}
+\subsubsection*{Optimal Investment Problem}
+Given $X_0$, find an adaped portfolio process $\Delta_0, \Delta_1,...,\Delta_{N-1}$ that maximizes
+$$\mathbb{E}U(X_N)$$ subject to the wealth equation
+$$X_{n+1} = \Delta_nS_{n+1}+(1+r)(X_n-\Delta_nS_n), n=0,1,...,N-1.$$
+Note that the agent uses the acutal probability measure $\mathbb{P}$ and uses uitility function $U$ to capture the trade-off between risk and return. Using risk neutral probability does not make sense because under the risk-neutral measure, every asset will have the same expected return; an agent seeking to maximize $\tilde{\mathbb{E}}U(X)$ would invest only in the money market. 
+However, as the number of periods increases, the number of varialbes $\Delta_n(\omega)$ grows exponentially. So we can also formulate the problem as follows:
+\subsubsection*{Same Investment Problem Revisited}
+Given $X_0$, find a random variable $X_N$ (without regard to a portfolio process) that maximizes
+$$\mathbb{E}U(X_N)$$
+subject to $$\tilde{\mathbb{E}}\frac{X_N}{(1+r)^N}=X_0$$
+If we use superscripts to indicate that $\omega^m$ isa fulll sequence of coin tosses, and define $\zeta_m = \zeta(\omega^m)$, $p_m = \mathbb{P}(\omega^m)$, and $x_m = X_N(\omega^m)$. Then the problem can be reformulated as follows:\\
+Given $X_0$, find a vector $(x_1,x_2,...,x_M)$ that maximizes 
+$$\sum_{m=1}^Mp_m U(x_m)$$
+subject to $$\sum_{m=1}^Mp_mx_m\zeta_m = X_0.$$
+The Lagrange multiplier equations are 
+$$\frac{\partial}{\partial x_m}L  = p_mU'(x_m) - \lambda p_m\zeta_m = 0, m=1,2,...,M$$
+So$$ U'(x_m) = \lambda \zeta_m \Longrightarrow U'(X_N) = \frac{\lambda Z}{(1+r)^N}\Longrightarrow X_N = (U')^{-1}\left(\frac{\lambda Z}{(1+r)^N}\right)$$
+Therefore, we can solve for $\lambda$ by 
+$$X_0 = \mathbb{E}\left[\frac{Z}{(1+r)^N}(U')^{-1}\left(\frac{\lambda Z}{(1+r)^N}\right)\right]$$
+\end{document}
+              

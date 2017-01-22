@@ -11,7 +11,7 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 
-\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
 		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
 \newenvironment{Lemma}[2][Lemma]{\begin{trivlist}
 		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
@@ -25,7 +25,7 @@
 	\title{Probability Theory on Coin Toss Space}
 	\author{Peiliang Guo}
 	\maketitle
-	\begin{problem}{1}	\end{problem}
+	\begin{exercise}{1}	\end{exercise}
 	(i) We first prove disjoint additivity: if $E_1$ and $E_2$ are disjoint, then $\mathbb{P}(E_1)+\mathbb{P}(E_2) = \mathbb{P}(E_1\cup E_2)$.
 	$$\mathbb{P}(E_1)+\mathbb{P}(E_2) = \sum_{\omega\in E_1}\mathbb{P}(\omega)+ \sum_{\omega\in E_2}\mathbb{P}(\omega)=\sum_{\omega\in(E_1\cup E_2)}\mathbb{P}(\omega)=\mathbb{P}(E_1\cup E_2)$$
 Since $A$ and $A^C$ are disjoint, $$\mathbb{P}(A^C)+\mathbb{P}(A)=\mathbb{P}(\Omega) = 1 \Rightarrow \mathbb{P}(A^C) = 1-\mathbb{P}(A)$$
@@ -34,7 +34,7 @@ Since $A$ and $A^C$ are disjoint, $$\mathbb{P}(A^C)+\mathbb{P}(A)=\mathbb{P}(\Om
 	Now, let $E_0=A_0$, and let $E_k = A_k\setminus(\cup_{i=1}^{k-1}E_i)$ for $k=2,3,...,N$, then $E_i$ are disjoint and $\cup_{i=1}^NE_i = \cup_{i=1}^N A_i$. So, 
 	$$\mathbb{P}\left(\bigcup_{n=1}^N A_n\right)=\mathbb{P}\left(\bigcup_{n=1}^N E_n\right)=\sum_{n=1}^N\mathbb{P}(E_n)\le \sum_{n=1}^N\mathbb{P}(A_n)$$
 	
-	\begin{problem}{2}\end{problem}
+	\begin{exercise}{2}\end{exercise}
 	(i) The probabilities follow binomial probabilities with $p=\tilde{p} = \frac{1}{2}$. i.e.
 	\begin{align*}
 	\tilde{\mathbb{P}}(S_3 = 32) =& {3\choose 3}\left(\frac{1}{2}\right)^3=\frac{1}{8}\\
@@ -60,13 +60,13 @@ Since $A$ and $A^C$ are disjoint, $$\mathbb{P}(A^C)+\mathbb{P}(A)=\mathbb{P}(\Om
 	\mathbb{E}S_3 =& \frac{8}{27}\cdot 32 + \frac{12}{27}\cdot 8 + \frac{6}{27}\cdot 2 + \frac{1}{27}\cdot 0.5 = 13.5
 	\end{align*}
 	The rate of growth of mean stock price under $\mathbb{P}$ is $1.5$. \\
-	\begin{problem}{3}\end{problem}
+	\begin{exercise}{3}\end{exercise}
 	By martingale property, for any $0\le n\le N-1$, 
 	$$M_n = \mathbb{E}_nM_{n+1} \Rightarrow \varphi(M_n) = \varphi(\mathbb{E}_nM_{n+1})$$
 	By conditional Jensen's inequality, since $\varphi$ is convex,
 	$$\varphi(M_n) = \varphi(\mathbb{E}_n M_{n+1})\le \mathbb{E}_n[\varphi(M_{n+1})]$$
 	Thus, $\varphi(M_0),...,\varphi(M_N)$ is a submartingale. 
-	\begin{problem}{4}\end{problem}
+	\begin{exercise}{4}\end{exercise}
 	(i) For arbitrary $n\ge 0$, we have
 	\begin{align*}
 	\mathbb{E}_n[M_{n+1}] =& \mathbb{E}_n[M_n + X_{n+1}] & \\
@@ -84,7 +84,7 @@ Since $A$ and $A^C$ are disjoint, $$\mathbb{P}(A^C)+\mathbb{P}(A)=\mathbb{P}(\Om
 	=&\left(\frac{2}{e^\sigma+e^{-\sigma}}\right)\left(\frac{1}{2}e^\sigma+\frac{1}{2}e^{-\sigma}\right)S_n\\
 	=&S_n
 	\end{align*}
-	\begin{problem}{5}\end{problem}
+	\begin{exercise}{5}\end{exercise}
 	(i) \begin{align*}
 	2I_n=&2\sum_{j=0}^{n-1}M_j(M_{j+1}-M_j)=2\sum_{j=0}^{n-1} \sum_{i=1}^j X_iX_{j+1}
 	=2\left(\sum_{j=1}^{n} \sum_{i=1}^{j} X_iX_{j}-\sum_{j=1}^n X_j^2\right)\\
@@ -99,16 +99,16 @@ Since $A$ and $A^C$ are disjoint, $$\mathbb{P}(A^C)+\mathbb{P}(A)=\mathbb{P}(\Om
 	\end{align*}
 	Since $I_n$ and $M_n$ are known at time $n$, we have
 	\begin{align*}g(I_n) = &E_n[f(I_{n+1})] = E_n[f(I_n+M_nX_{n+1})]\\=&\frac{1}{2}f(I_n+M_n)+\frac{1}{2}f(I_n-M_n)\\=&\frac{1}{2}\left(f(I_n+\sqrt{2I_n+n})+f(I_n-\sqrt{2I_n+n})\right)\end{align*}
-	\begin{problem}{6}\end{problem}
+	\begin{exercise}{6}\end{exercise}
 	For any $0\le n\le N-1$, 
 	\begin{align*}
 	E_n[I_{n+1}]=&E_n[I_n+\Delta_n(M_{n+1}-M_n)]\\
 		=&I_n+\Delta_n E_n[M_{n+1}-M_n]\\
 		=&I_n
 	\end{align*}
-	\begin{problem}{7}\end{problem}
+	\begin{exercise}{7}\end{exercise}
 	Let $X_0=0$, $X_1=1$ with probability $\frac{1}{2}$, and $X_1=-1$ with probability $\frac{1}{2}$. For $n\ge2$, $X_n = X_{n-1}+\varepsilon_n$ with probability $\frac{1}{2}$, and $X_n=X_{n-1}-\varepsilon_n$ with probability $\frac{1}{2}$, where $\varepsilon_n = 1$ if $X_{n-2}>X_{n-1}$, and $\varepsilon=2$ if $X_{n-2}<X_{n-1}$. 
-	\begin{problem}{8}\end{problem}
+	\begin{exercise}{8}\end{exercise}
 	(i) For $n=N-1$, for any $\omega_1...\omega_n$, 
 	\begin{align*}M_n'(\omega_1...\omega_n) =& \frac{1}{1+r}[\tilde{p}M_N'(\omega_1...\omega_nH)+\tilde{q}M_N'(\omega_1...\omega_nT)]\\
 	=&\frac{1}{1+r}[\tilde{p}M_N(\omega_1...\omega_nH)+\tilde{q}M_N(\omega_1...\omega_nT)]\\
@@ -127,7 +127,7 @@ Since $A$ and $A^C$ are disjoint, $$\mathbb{P}(A^C)+\mathbb{P}(A)=\mathbb{P}(\Om
 	&=\frac{V'_n}{(1+r)^n}
 	\end{align*}
 	(iv) Conclusion can be drawn from part (i), since the terminal payoff are the same $V_N = V'_N$, and $V_0,V_1,...,V_N$, and $V'_0,V'_1,...,V'_N$ are martingales. 
-	\begin{problem}{9}\end{problem}
+	\begin{exercise}{9}\end{exercise}
 	(i) We have
 	\begin{align*}\tilde{p}_1(H) = \frac{1+r_1(H)-d_1(H)}{u_1(H)-d_1(H)} = \frac{1+\frac{1}{4}-1}{\frac{3}{2}-1} =\frac{1}{2},&\,\tilde{q}_1(H)=1-\tilde{p}_1(H) = \frac{1}{2}\\
 	\tilde{p}_1(T) = \frac{1+r_1(T)-d_1(T)}{u_1(T)-d_1(T)} = \frac{1+\frac{1}{2}-1}{4-1} =\frac{1}{6},&\,\tilde{q}_1(T)=1-\tilde{p}_1(T) = \frac{5}{6}\\
@@ -146,11 +146,11 @@ Since $A$ and $A^C$ are disjoint, $$\mathbb{P}(A^C)+\mathbb{P}(A)=\mathbb{P}(\Om
 	\begin{align*}
 	&V_1(H) = \tilde{\mathbb{E}}_1\left[\frac{V_2}{1+r_1}\right](H) = \frac{1}{2}\cdot\frac{5}{1+\frac{1}{4}}+\frac{1}{2}\cdot\frac{1}{1+\frac{1}{4}}=\frac{12}{5}\\
 	&V_1(T) = \tilde{\mathbb{E}}_1\left[\frac{V_2}{1+r_1}\right](T) = \frac{1}{6}\cdot\frac{1}{1+\frac{1}{2}}+0=\frac{1}{9}\\
-	&V_0 =\tilde{\mathbb{E}}\left[\frac{V_2}{(1+r_0)(1+r_1)}\right]=\frac{1}{4}\cdot\frac{5}{(1+\frac{1}{4})(1+\frac{1}{4})}+\frac{1}{4}\cdot\frac{1}{(1+\frac{1}{4})(1+\frac{1}{4})}+\frac{1}{12}\cdot\frac{1}{(1+\frac{1}{4})(1+\frac{1}{2})}=\frac{226}{225}
+	&V_0 =\tilde{\mathbb{E}}\left[\frac{V_2}{(1+r_0)(1+r_1)}\right]=\frac{1}{4}\cdot\frac{5}{(1+\frac{1}{4})(1+\frac{1}{4})}+\frac{1}{4}\cdot\frac{1}{(1+\frac{1}{4})(1+\frac{1}{4})}+\frac{1}{12}\cdot\frac{1}{(1+\frac{1}{4})(1+\frac{1}{2})}=\frac{236}{225}
 	\end{align*}
 	(iii) $$\Delta_0 = \frac{V_1(H)-V_1(T)}{S_1(H)-S_1(T)} = \frac{\frac{12}{5}-\frac{1}{9}}{8-2} = \frac{103}{270}$$
 	(iv) $$\Delta_1(H) = \frac{V_2(HH)-V_2(HT)}{S_2(HH)-S_2(HT)} = \frac{5-1}{12-8} = 1$$
-	\begin{problem}{10}\end{problem}
+	\begin{exercise}{10}\end{exercise}
 	(i) for any $0\le n\le N-1$, we have
 	\begin{align*}
 	\tilde{\mathbb{E}}_n\left[\frac{X_{n+1}}{(1+r)^{n+1}}\right] &= \tilde{\mathbb{E}}_n\left[\frac{\Delta_nY_{n+1}S_n + (1+r)(X_n-\Delta_n S_n)}{(1+r)^{n+1}}\right]\\
@@ -168,7 +168,7 @@ Since $A$ and $A^C$ are disjoint, $$\mathbb{P}(A^C)+\mathbb{P}(A)=\mathbb{P}(\Om
 	\tilde{\mathbb{E}}_n\left[\frac{S_{n+1}}{(1-a)^{n+1}(1+r)^{n+1}}\right]&=\frac{S_n}{(1-a)^n(1+r)^n}\tilde{\mathbb{E}}_n\left[\frac{(1-a)Y_{n+1}}{(1-a)(1+r)}\right]\\
 	&=\frac{S_n}{(1-a)^n(1+r)^n} \left(\frac{1+r-d}{u-d}\cdot u \frac{u-1-d}{u-d}\cdot d\right) \\ &=\frac{S_n}{(1-a)^n(1+r)^n}
 	\end{align*}
-	\begin{problem}{11}	\end{problem}
+	\begin{exercise}{11}	\end{exercise}
 	(i) $$ F_N+P_N = S_N-K + (K-S_N)^+ = \begin{cases} S_N-K &,S_N\ge K\\0&, S_N<K\end{cases} = (S_N-K)^+=C_N$$
 	(ii) $$F_n+P_n = \tilde{\mathbb{E}}_n\left[\frac{F_N}{(1+r)^{N-n}}\right]+\tilde{\mathbb{E}}_n\left[\frac{P_N}{(1+r)^{N-n}}\right]=\tilde{\mathbb{E}}_n\left[\frac{F_N+P_N}{(1+r)^{N-n}}\right]=\tilde{\mathbb{E}}_n\left[\frac{C_N}{(1+r)^{N-n}}\right]=C_n$$
 	(iii)
@@ -177,19 +177,19 @@ Since $A$ and $A^C$ are disjoint, $$\mathbb{P}(A^C)+\mathbb{P}(A)=\mathbb{P}(\Om
 	At time $N$: $S_N+(1+r)^N\left(-\frac{K}{(1+r)^N}\right)=S_N-K=F_N$\\
 	(v) $$C_0 =F_0+P_0 = \tilde{\mathbb{E}}_0\left[\frac{S_N-S_0(1+r)^N}{(1+r)^{N}}\right]+P_0=P_0$$
 	(vi) Put all subscripts (conditional expectations) to $n$ instead of $0$
-	\begin{problem}{12}\end{problem}
+	\begin{exercise}{12}\end{exercise}
 	At time $m$, the value $V_m$ of the chooser's option is 
 	$$V_m = \max(C_m,P_m) = P_m+(C_m-P_m)^+ =P_m+F_m^+ = P_m+\left(S_m-\frac{K}{(1+r)^{N-m}}\right)^+$$
 	Therefore, at time 0, the price of the chooser's option is 
 	$$V_0 = P_0+C'_0$$ where $C'$ is a call option with strike $\frac{K}{(1+r)^{N-m}}$ and maturity $m$. 
-	\begin{problem}{13}\end{problem}
+	\begin{exercise}{13}\end{exercise}
 	(i) For every function $g$, we can write
 	$$\tilde{\mathbb{E}}_n[g(S_{n+1},Y_{n+1})]=\tilde{p}g(uS_n,Y_n+uS_n)+\tilde{q}g(dS_n,Y_n+dS_n)=h(S_n,Y_n)$$
 	Therefore, $(S_n,Y_n), n=0,1,...,N$ is Markov.\\
 	(ii) $$V_N = f\left(\frac{1}{N+1}\sum_0^N S_n \right) \Rightarrow v_N(s,y) = f\left(\frac{1}{N+1}y\right)$$
 	Now, for $n=0,1,...,N-1$, 
 	$$v_n(s,y) = \tilde{p}v_{n+1}(us,y+us)+\tilde{q}v_{n+1}(ds,y+ds)$$
-	\begin{problem}{14}\end{problem}
+	\begin{exercise}{14}\end{exercise}
 	(i) For every function $g$, and for $n=M,M+1,...,N$, 
 	$$\tilde{\mathbb{E}}_n[g(S_{n+1},Y_{n+1})] = \tilde{p}g(uS_n,Y_n+uS_n)+\tilde{q}g(dS_n,Y_n+dS_n)$$
 	and for $n=0,1,...,M-2$, 
